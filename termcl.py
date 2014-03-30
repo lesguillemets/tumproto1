@@ -9,6 +9,7 @@ import Queue
 import threading
 from postprinter import PostPrinter
 from textwrap import dedent
+from colors import prettify
 
 client = pytumblr.TumblrRestClient(
     keys.consumer_key,
@@ -17,7 +18,6 @@ client = pytumblr.TumblrRestClient(
     keys.oauth_tokens['oauth_token_secret']
 )
 
-tracked_tags = ["firefox", "monospaced", "programming", ]
 
 class Myapp(object):
     """ base class."""
@@ -41,19 +41,23 @@ class Myapp(object):
             if tag is None:
                 self.readdashboard()
                 continue
-            print(" reading {}".format(tag))
+            print(" {} {}".format(
+                prettify('reading','green','blue'),tag.encode("utf-8")))
             if not args:
-                posts = self.client.tagged(tag)
+                posts = self.client.tagged(tag.encode('utf-8'))
             else:
-                posts = self.client.tagged(tag, before=int(before))
-            print("{} : {}".format(tag,len(posts)))
+                posts = self.client.tagged(tag.encode('utf-8'), **args)
+            print(" {} : {}".format(tag.encode('utf-8'),len(posts)))
             for post in posts:
                 self.tlqueue.put(post)
             self.readqueue.task_done()
-            print("job done: {}".format(tag))
+            print(" {}: {}".format(
+                prettify('Job done','magenta','cyan'),
+                tag.encode('utf-8')))
     
     def readdashboard(self, **args):
-        print("reading dashboard")
+        print(" {} dashboard".format(
+            prettify('reading','green','blue')))
         posts = self.client.dashboard()['posts']
         for post in posts:
             #print(post)
@@ -67,12 +71,12 @@ class Myapp(object):
             t.start()
         self.readqueue.join()
     
-    def showtl(self):
+    def showtl(self,n=45):
         tl = []
         while not self.tlqueue.empty():
             tl.append(self.tlqueue.get())
         tl.sort(key=lambda x:x['timestamp'])
-        for post in reversed(tl[-45:]):
+        for post in reversed(tl[-n:]):
             self.printpost(post)
     @staticmethod
     def printpost(post):
@@ -83,6 +87,10 @@ class Myapp(object):
         self.showtl()
 
 
-
+tracked_tags = ["firefox", "monospaced", "programming", 'Georgia',
+                'Georgian language', 'tbilisi', 'kartveli', 'sakartvelo',
+                'linux','bash','bashrc','vimrc','vim','monospace',
+                'processing','regex','typography','typesetting',
+                'typeface','font', 'train','cityscape','ruby rose']
 a = Myapp(tracked_tags)
 a.tryme()

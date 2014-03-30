@@ -3,6 +3,7 @@
 from textwrap import dedent
 from colors import prettify
 from colors import bold, underlined
+import os
 """
 pretty prints posts.
 """
@@ -26,7 +27,12 @@ def photopost(post):
         """).format(
             bold(post['caption'].encode('utf-8')),
             '\n\t'.join(
-                ('* ' + photo['caption'].encode('utf-8')
+                ('* {}\n\t\t({} : {}x{})'.format(
+                    bold(photo['caption'].encode('utf-8')),
+                    prettify(photo['alt_sizes'][0]['url'],'dark gray',None),
+                    prettify(photo['alt_sizes'][0]['width'],'dark gray',None),
+                    prettify(photo['alt_sizes'][0]['height'],'dark gray',None)
+                )
                     for photo in post['photos'])
             )
         )
@@ -83,15 +89,19 @@ class PostPrinter(object):
     
     @classmethod
     def show(cls, post):
+        rows, columns = map(int,os.popen('stty size', 'r').read().split())
         printstr = dedent(
             """\
-            ___________________________________________
+            {}
+            {}
             {} at {} from {}, id is {}
             {} : [{}]
             """).format(
+                prettify(' '*columns,'dark gray',None,'underlined'),
+                prettify(' '*columns,None,None),
                 prettify(post['type'], 'white', 'blue'),
                 bold(post['date']),
-                prettify(post['blog_name'],'light blue', None,'bold'),
+                prettify(post['blog_name'],None, None,'bold'),
                 post['id'],
                 prettify('tagged','green',None,'bold'),
                 ','.join(
@@ -104,7 +114,7 @@ class PostPrinter(object):
                 post['source_title'].encode('utf-8'),
                 post['source_url'].encode('utf-8'))
         printstr += cls.printer[post['type']](post)
-        printstr += "___________________________________________\n"
+        printstr += prettify(' '*columns+'\n', 'dark gray',None,'underlined')
         return printstr
 
 
