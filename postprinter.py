@@ -12,26 +12,24 @@ def textpost(post):
         """\
         ==={}===
         {}
-        """.format(
+        """).format(
             prettify(post['title'].encode('utf-8') if post['title'] else '',
                      'green', None, 'bold', 'underlined'),
             bold(post['body'].encode('utf-8'))
         )
-    )
 
 def photopost(post):
     photostr = dedent(
         """\
         {}
         \t{}
-        """.format(
+        """).format(
             bold(post['caption'].encode('utf-8')),
             '\n\t'.join(
                 ('* ' + photo['caption'].encode('utf-8')
                     for photo in post['photos'])
             )
         )
-    )
     return photostr
 
 def quotepost(post):
@@ -39,12 +37,11 @@ def quotepost(post):
         """\
         {}
         \t---{}
-        """.format(
+        """).format(
             post['text'].encode('utf-8'),
             prettify(post['source'].encode('utf-8'),
                      'light gray',None),
         )
-    )
     return quotestr
 
 def linkpost(post):
@@ -91,7 +88,7 @@ class PostPrinter(object):
             ___________________________________________
             {} at {} from {}, id is {}
             {} : [{}]
-            """.format(
+            """).format(
                 prettify(post['type'], 'white', 'blue'),
                 bold(post['date']),
                 prettify(post['blog_name'],'light blue', None,'bold'),
@@ -102,7 +99,6 @@ class PostPrinter(object):
                              post['tags']))
                 )
             )
-        )
         if 'source_url' in post:
             printstr += "source : {} ({})\n".format(
                 post['source_title'].encode('utf-8'),
