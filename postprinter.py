@@ -114,6 +114,8 @@ class PostPrinter(object):
                 post['source_title'].encode('utf-8'),
                 post['source_url'].encode('utf-8'))
         printstr += cls.printer[post['type']](post)
+        printstr += prettify('({})'.format(post['post_url']).rjust(columns),
+                             'dark gray', None)
         printstr += prettify(' '*columns+'\n', 'dark gray',None,'underlined')
         return printstr
 
