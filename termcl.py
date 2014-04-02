@@ -10,6 +10,7 @@ import threading
 from postprinter import PostPrinter
 from textwrap import dedent
 from colors import prettify
+from urllib import urlretrieve
 
 client = pytumblr.TumblrRestClient(
     keys.consumer_key,
@@ -27,6 +28,9 @@ class Myapp(object):
         self.client = client
         self.freshqueue()
         self.workernum = workernum
+    
+    def fetchimg(self, imgurl,saveurl):
+        pass
     
     def freshqueue(self):
         self.readqueue = Queue.Queue()
