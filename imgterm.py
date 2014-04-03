@@ -18,7 +18,7 @@ def get_termsize():
                 sys.stdout.fileno(),
                 termios.TIOCGWINSZ,
                 struct.pack('HHHH', 0, 0, 0, 0)))
-    except OSError:
+    except IOError:
         import os
         h, w = map(int,os.popen('stty size', 'r').read().split())
     return w, h
