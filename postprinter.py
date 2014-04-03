@@ -3,7 +3,10 @@
 from textwrap import dedent
 from colors import prettify
 from colors import bold, underlined
+from postimage import PostImage
+import imgterm
 import os
+
 """
 pretty prints posts.
 """
@@ -27,8 +30,14 @@ def photopost(post):
         """).format(
             bold(post['caption'].encode('utf-8')),
             '\n\t'.join(
-                ('* {}\n\t\t({} : {}x{})'.format(
+                ('* {}\n\t{}\n\t\t({} : {}x{})'.format(
                     bold(photo['caption'].encode('utf-8')),
+                    '\n\t'.join(
+                        imgterm.show_img(
+                        PostImage.id_and_num_to_file(post['id'],
+                                                     photo['alt_sizes'][0]['url'])
+                        )
+                    ),
                     prettify(photo['alt_sizes'][0]['url'],'dark gray',None),
                     prettify(photo['alt_sizes'][0]['width'],'dark gray',None),
                     prettify(photo['alt_sizes'][0]['height'],'dark gray',None)

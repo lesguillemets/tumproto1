@@ -6,6 +6,7 @@ from textwrap import dedent
 import PIL.Image as img
 import numpy as np
 import sys
+import os
 from rgbtoansi import colorize_bg
 
 def get_termsize():
@@ -30,6 +31,8 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
     about 2 for monaco, 2.5 for ubuntu mono.
     returns list of lines.
     '''
+    if os.path.splitext(imgfile)[1] == '.gif':  # gif animation not supported yet
+        return ''
     w, _ = get_termsize()
     w = int(w*widthratio)
     imgary = np.array(img.open(imgfile))
