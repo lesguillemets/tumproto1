@@ -28,6 +28,7 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
     widthratio : how much of terminal width the image uses
     fontratio : the ratio height/width of your font
     about 2 for monaco, 2.5 for ubuntu mono.
+    returns list of lines.
     '''
     w, _ = get_termsize()
     w = int(w*widthratio)
@@ -36,7 +37,9 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
     marks = [int(float(i)*imgwidth/w) for i in range(w+1)]
     rowpixels = (imgwidth/w)*fontratio  # 2 for monaco, 2.5 for ubuntu mono
     yreadingstart = 0
+    img_str = []
     while yreadingstart < imgheight-1:
+        line = []
         for (i,m) in enumerate(marks[1:]):
             m_b = marks[i]
             if method == "upperleft":
@@ -50,18 +53,10 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
                         pixel += grid[y_,x_]
                 pixel = pixel//(len(grid)*len(grid[0]))
             
-            sys.stdout.write(colorize_bg(' ', list(pixel)))
-            sys.stdout.flush()
+            line.append(colorize_bg(' ', list(pixel)))
         yreadingstart += rowpixels
-        sys.stdout.write('\n')
-
-
-def test():
-    testfile = 'kitten.jpg'
-    show_img(testfile,1/2,2)
-    print("______________________________")
-    show_img(testfile,1/2,2, 'mean')
-
+        img_str.append(''.join(line))
+    return img_str
 
 def main():
     try:
@@ -72,7 +67,8 @@ def main():
     
     for filename in filenames:
         try:
-            show_img(filename,method='mean')
+            imgstr = show_img(filename)
+            print('\n'.join(imgstr))
         except IOError:
             print("No file found. Or something like that.")
             continue
