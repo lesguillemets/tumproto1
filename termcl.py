@@ -117,7 +117,7 @@ class Myapp(object):
         self.imgqueue.join()
         print("DONE")
     
-    def showtl(self,n=5):
+    def showtl(self,n=10):
         tl = []
         while not self.tlqueue.empty():
             tl.append(self.tlqueue.get())

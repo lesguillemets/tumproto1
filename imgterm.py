@@ -44,6 +44,7 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
         '''
         ./imgs/1_81580523345.png
         '''
+        # FIXME : can't handle transparent (not rgba?)
         print(imgary)
         print(e)
         print(imgfile)
