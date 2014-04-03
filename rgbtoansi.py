@@ -17,6 +17,13 @@ def rgb_to_code(rgb):
     rlevel, glevel, blevel = map(lambda x:x*6//256, rgb)
     return 16 + rlevel*36 + glevel*6 + blevel
 
+def grayscale_to_code(gray):
+    """ gray : 0<=gray<=255"""
+    if not 0 <= gray <= 255:
+        raise ValueError(" 0<=gray<=255 required.")
+    graylevel = gray*24//256
+    return 232+graylevel
+
 def colorize_fg(string, rgb):
     return "\033[38;5;{}m{}\033[0m".format(
         rgb_to_code(rgb),string)
@@ -24,6 +31,14 @@ def colorize_fg(string, rgb):
 def colorize_bg(string, rgb):
     return "\033[48;5;{}m{}\033[0m".format(
         rgb_to_code(rgb),string)
+
+def grayscale_fg(string, gray):
+    return "\033[38;5;{}m{}\033[0m".format(
+        grayscale_to_code(gray),string)
+
+def grayscale_bg(string, gray):
+    return "\033[48;5;{}m{}\033[0m".format(
+        grayscale_to_code(gray),string)
 
 def fgbegin(rgb):
     return "\033[38;5;{}m".format(
@@ -54,3 +69,6 @@ if __name__ == "__main__":
     print(set_color((250,0,0),(0,255,0)),end='')
     print("FOOOOOO    ",end='')
     print(clear_style())
+    for i in range(0,255,10):
+        print(grayscale_fg('gray :{}'.format(i),i))
+

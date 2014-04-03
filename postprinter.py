@@ -35,7 +35,8 @@ def photopost(post):
                     '\n\t'.join(
                         imgterm.show_img(
                         PostImage.id_and_num_to_file(post['id'],
-                                                     photo['alt_sizes'][0]['url'])
+                                                     photo['alt_sizes'][0]['url']),
+                            method='mean'  # better at letters.
                         )
                     ),
                     prettify(photo['alt_sizes'][0]['url'],'dark gray',None),
