@@ -45,10 +45,7 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
         ./imgs/1_81580523345.png
         '''
         # FIXME : can't handle transparent (not rgba?)
-        print(imgary)
-        print(e)
-        print(imgfile)
-        raise TypeError(e)
+        return ''
     mode = ''
     if len(imgary.shape) == 2:
         mode = 'grayscale'
@@ -103,7 +100,7 @@ def main():
     
     for filename in filenames:
         try:
-            imgstr = show_img(filename)#, method='mean')
+            imgstr = show_img(filename) #, method='mean')
             print('\n'.join(imgstr))
         except IOError:
             print("No file found. Or something like that.")
