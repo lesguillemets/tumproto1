@@ -35,7 +35,8 @@ def photopost(post):
                     '\n\t'.join(
                         imgterm.show_img(
                         PostImage.id_and_num_to_file(post['id'],
-                                                     photo['alt_sizes'][0]['url']),
+                                                     photo['alt_sizes'][0]['url'],
+                                                     i),
                             method='mean'  # better at letters.
                         )
                     ),
@@ -43,7 +44,7 @@ def photopost(post):
                     prettify(photo['alt_sizes'][0]['width'],'dark gray',None),
                     prettify(photo['alt_sizes'][0]['height'],'dark gray',None)
                 )
-                    for photo in post['photos'])
+                    for (i,photo) in enumerate(post['photos']))
             )
         )
     return photostr

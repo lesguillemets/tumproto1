@@ -37,11 +37,17 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
         #return ''
     w, _ = get_termsize()
     w = int(w*widthratio)
+    imgary = np.array(img.open(imgfile))
     try:
-        imgary = np.array(img.open(imgfile))
-    except IOError:
+        imgheight, imgwidth = len(imgary), len(imgary[0])
+    except TypeError as e:
+        '''
+        ./imgs/1_81580523345.png
+        '''
+        print(imgary)
+        print(e)
+        print(imgfile)
         return ''
-    imgheight, imgwidth = len(imgary), len(imgary[0])
     mode = ''
     if len(imgary.shape) == 2:
         mode = 'grayscale'
@@ -67,7 +73,7 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
                               m_b:m]
                 if mode == 'grayscale':
                     pixel = sum(grid.flatten())/float(
-                        grid.shape(0)*grid.shape(1))
+                        grid.shape[0]*grid.shape[1])
                 else:
                     if mode == 'rgb':
                         pixel = np.array((0,0,0))

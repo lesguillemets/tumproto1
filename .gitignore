@@ -4,5 +4,6 @@
 *.gif
 *.jpeg
 *.swp
+.directory
 keys.py
 
