@@ -47,7 +47,7 @@ def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
         print(imgary)
         print(e)
         print(imgfile)
-        return ''
+        raise TypeError(e)
     mode = ''
     if len(imgary.shape) == 2:
         mode = 'grayscale'

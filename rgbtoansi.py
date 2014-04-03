@@ -21,7 +21,7 @@ def grayscale_to_code(gray):
     """ gray : 0<=gray<=255"""
     if not 0 <= gray <= 255:
         raise ValueError(" 0<=gray<=255 required.")
-    graylevel = gray*24//256
+    graylevel = int(gray*24/256)
     return 232+graylevel
 
 def colorize_fg(string, rgb):
