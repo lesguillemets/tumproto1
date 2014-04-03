@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # coding:utf-8
 
+from __future__ import print_function
 from textwrap import dedent
 import PIL.Image as img
 import numpy as np
@@ -21,7 +22,7 @@ def get_termsize():
         h, w = map(int,os.popen('stty size', 'r').read().split())
     return w, h
 
-def show_img(imgfile, widthratio=2/3, fontratio=2.5, method="upperleft"):
+def show_img(imgfile, widthratio=2.0/3, fontratio=2.5, method="upperleft"):
     '''
     imgfile : image file readable by PIL.Image.open
     widthratio : how much of terminal width the image uses
@@ -32,7 +33,7 @@ def show_img(imgfile, widthratio=2/3, fontratio=2.5, method="upperleft"):
     w = int(w*widthratio)
     imgary = np.array(img.open(imgfile))
     imgheight, imgwidth = len(imgary), len(imgary[0])
-    marks = [int(i*imgwidth/w) for i in range(w+1)]
+    marks = [int(float(i)*imgwidth/w) for i in range(w+1)]
     rowpixels = (imgwidth/w)*fontratio  # 2 for monaco, 2.5 for ubuntu mono
     yreadingstart = 0
     while yreadingstart < imgheight-1:
