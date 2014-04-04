@@ -71,7 +71,7 @@ class Myapp(object):
             t.start()
         self.readqueue.join()
     
-    def showtl(self,n=45):
+    def showtl(self,n=15):
         tl = []
         while not self.tlqueue.empty():
             tl.append(self.tlqueue.get())
@@ -87,10 +87,10 @@ class Myapp(object):
         self.showtl()
 
 
-tracked_tags = ["firefox", "monospaced", "programming", 'Georgia',
-                'Georgian language', 'tbilisi', 'kartveli', 'sakartvelo',
-                'linux','bash','bashrc','vimrc','vim','monospace',
-                'processing','regex','typography','typesetting',
-                'typeface','font', 'train','cityscape','ruby rose']
+tracked_tags = ["chat",'ask',"firefox",] #"monospaced", "programming", 'Georgia',
+#                'Georgian language', 'tbilisi', 'kartveli', 'sakartvelo',
+#                'linux','bash','bashrc','vimrc','vim','monospace',
+#                'processing','regex','typography','typesetting',
+#                'typeface','font', 'train','cityscape','ruby rose']
 a = Myapp(tracked_tags)
 a.tryme()

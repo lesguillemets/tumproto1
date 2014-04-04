@@ -1,3 +1,10 @@
 *.pyc
 keys.py
+*.jpg
+*.png
+*.gif
+*.jpeg
+*.swp
+.directory
+imgs/
 
