@@ -72,16 +72,34 @@ def linkpost(post):
     return linkstr + '\n'
 
 def chatpost(post):
-    return ("CHAT!\n")
+    dialog = post['dialogue']
+    title = post['title']
+    if not title: title=''
+    diastr = '\n\n'.join(
+        ('{}\n\t{}'.format(
+            log['label'].encode('utf-8'),
+            '\n\t'.join(log['phrase'].encode('utf-8').split('\n')))
+        for log in dialog)
+    )
+    return bold(title.encode('utf-8')) + diastr
 
 def audiopost(post):
-    return("audio!\n")
+    return(post['caption'].encode("utf-8"))
 
 def videopost(post):
-    return("video!\n")
+    return(post['caption'].encode("utf-8"))
 
 def answerpost(post):
-    return("answer!\n")
+    return dedent('''\
+           {} Asked {} ({}):
+           \t {}
+           
+           --{}'''.format(
+               post['asking_name'].encode('utf-8'),
+               post['blog_name'], post['asking_url'],
+               post['question'].encode('utf-8'),
+               bold(post['answer'].encode('utf-8'))
+           ))
 
 class PostPrinter(object):
     def __init__(self):
