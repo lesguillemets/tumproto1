@@ -128,12 +128,12 @@ class Myapp(object):
     def printpost(post):
         print(PostPrinter().show(post))
     
-    def tryme(self):
+    def tryme(self,n=10):
         self.read()
-        self.showtl()
+        self.showtl(n)
 
 
 tracked_tags = ["firefox", "monospaced"]
 a = Myapp(tracked_tags)
-a.tryme()
+a.tryme(20)
 sys.exit()
