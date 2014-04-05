@@ -68,7 +68,7 @@ def linkpost(post):
         'blue',None))
     linkstr += '\n'.join(
         ('\t'+line.encode('utf-8'))
-             for line in post['description'].split())
+             for line in post['description'].split('\n'))
     return linkstr + '\n'
 
 def chatpost(post):
