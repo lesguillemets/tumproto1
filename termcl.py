@@ -6,6 +6,7 @@ import keys
 import pytumblr
 import urllib2
 import Queue
+import sys
 import threading
 from postprinter import PostPrinter
 from textwrap import dedent
@@ -74,6 +75,7 @@ class Myapp(object):
             print(" {}: {}".format(
                 prettify('Job done','magenta','cyan'),
                 tag.encode('utf-8')))
+            sys.stdout.flush()
     
     def readdashboard(self, **args):
         print(" {} dashboard".format(
@@ -124,6 +126,7 @@ class Myapp(object):
         tl.sort(key=lambda x:x['timestamp'])
         for post in reversed(tl[-n:]):
             self.printpost(post)
+            sys.stdout.flush()
     @staticmethod
     def printpost(post):
         print(PostPrinter().show(post))
