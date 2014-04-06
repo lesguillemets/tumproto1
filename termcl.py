@@ -38,12 +38,14 @@ class Myapp(object):
                 try:
                     print("downloading Image from {}...".format(
                                 target.url))
+                    sys.stdout.flush()
                     urlretrieve(target.url,target.fname)
                 except IOError:
                     pass
             else:
                 print("skipping Image from {}".format(
                     target.url))
+                sys.stdout.flush()
             self.imgqueue.task_done()
 
     def freshqueue(self):
